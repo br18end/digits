@@ -7,11 +7,11 @@ int main(){
    int m = 1;
    int i = 0; 
    int aux = 0;
-   int arreglo[10];
-   char salida[200];
+   int array[10];
+   char output[200];
    char auxiliar[100];
 
-   //memset(arreglo, '\0', sizeof(arreglo));
+   //memset(array, '\0', sizeof(array));
    while(n > 0 && m > 0){
       scanf("%d %d", &n, &m);
       if(n > 0 && m > 0){
@@ -19,18 +19,18 @@ int main(){
          for(i = n;i <= m;i++){
             aux = i;
             while(aux > 0){
-               arreglo[aux % 10]++;
+               array[aux % 10]++;
                aux = aux / 10;
             }
          }
       
          for(i = 0;i < 10; i++){
-	   sprintf(auxiliar,"%d ",arreglo[i]);
-           strcat(salida,auxiliar);         
-           arreglo[i] = 0;
+	   sprintf(auxiliar,"%d ",array[i]);
+           strcat(output,auxiliar);         
+           array[i] = 0;
          }
-         strcat(salida,"\n");
+         strcat(output,"\n");
       }
    }
-   printf("%s", salida);
+   printf("%s", output);
 }

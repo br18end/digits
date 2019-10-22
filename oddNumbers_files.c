@@ -2,65 +2,63 @@
 #include<stdio.h>
 
 int main(){
-	int n = 1,m = 1, aux = 0, i, j, p, primos, cont, res;
-	int posicion = 0;
-	int arreglo[10] = {0};
-	FILE *entrada, *salida;
-	char nombre_archivo[20], linea[20];
+	int n = 1,m = 1, aux = 0, i, j, p, odds, cont, res;
+	int position = 0;
+	int array[10] = {0};
+	FILE *input, *output;
+	char fileName[20], line[20];
 
 	scanf("%d %d", &n, &m);
-	sprintf(nombre_archivo,"/tmp/%d", getpid());
+	sprintf(fileName,"/tmp/%d", getpid());
 	p = fork();
 
 	if(p == 0){
 		for(i = n; i <= m; i++){
 			aux = i;
 			while(aux > 0){
-				posicion = aux % 10;
-				arreglo[posicion] = arreglo [posicion] + 1;
+				position = aux % 10;
+				array[position] = array [position] + 1;
 				aux = aux / 10;
 			}
 		}
 
-		salida = fopen(nombre_archivo, "w");
-		if (salida == NULL) {
-      			fprintf(stderr,"Error al abrir archivo %s\n", nombre_archivo);
+		output = fopen(fileName, "w");
+		if (output == NULL) {
+      			fprintf(stderr,"Error opening file %s\n", fileName);
 			return;
 		}
 
 		for(i = 0; i < 10; i++){
-			sprintf(linea, "%d ", arreglo[i]);
-   			fprintf(salida, linea);
-		}fclose(salida);
+			sprintf(line, "%d ", array[i]);
+   			fprintf(output, line);
+		}fclose(output);
 
 	} else {
-		entrada = fopen(nombre_archivo, "r");
+		input = fopen(fileName, "r");
     		
-      		if (entrada == NULL) {
-			while(entrada == NULL){
-      				entrada = fopen(nombre_archivo, "r");
+      		if (input == NULL) {
+			while(input == NULL){
+      				input = fopen(fileName, "r");
        			}	
      		}
 
 		cont = 0;
 		for (i = n; i <= m; i++) {
-			primos = 1;
+			odds = 1;
 			for (j=2; j<i; j++) {
 				res = i % j;
 				if (res == 0) {
-					primos = 0;
+					odds = 0;
 					j=i;
 				}
 			}
-			if (primos) {
+			if (odds) {
 				cont++;
 			}
 		}		
-		printf("Primos entre %d y %d inclusive: %d\n", n, m, cont);
+		printf("odds between %d and %d inclusive: %d\n", n, m, cont);
 		wait();
-		fgets(linea, sizeof(linea), entrada);
-		printf("Digits: %s Archivo: %s\n",linea,nombre_archivo);
+		fgets(line, sizeof(line), input);
+		printf("Digits: %s File: %s\n",line,fileName);
 	}
 }
-
-Sharing settings
